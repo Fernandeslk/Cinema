@@ -33,44 +33,42 @@ function gerarId() {
   return Date.now().toString();
 }
 
+// ===== MENSAGEM =====
+function mostrarMsg(texto, erro) {
+  var el = document.getElementById('msg');
+  el.textContent = texto;
+  el.className = 'msg' + (erro ? ' erro' : '');
+  el.style.display = 'block';
+  setTimeout(function() { el.style.display = 'none'; }, 3000);
+}
+
 // ===== FILMES =====
 function salvarFilme(event) {
   event.preventDefault();
-
-  var titulo = document.getElementById('filme-titulo').value.trim();
-  var genero = document.getElementById('filme-genero').value;
-  var descricao = document.getElementById('filme-descricao').value.trim();
-  var classificacao = document.getElementById('filme-classificacao').value;
-  var duracao = document.getElementById('filme-duracao').value;
-  var estreia = document.getElementById('filme-estreia').value;
-
   var filmes = getData('filmes');
   filmes.push({
     id: gerarId(),
-    titulo: titulo,
-    genero: genero,
-    descricao: descricao,
-    classificacao: classificacao,
-    duracao: duracao,
-    estreia: estreia
+    titulo: document.getElementById('filme-titulo').value.trim(),
+    genero: document.getElementById('filme-genero').value,
+    descricao: document.getElementById('filme-descricao').value.trim(),
+    classificacao: document.getElementById('filme-classificacao').value,
+    duracao: document.getElementById('filme-duracao').value,
+    estreia: document.getElementById('filme-estreia').value
   });
   setData('filmes', filmes);
-
   event.target.reset();
-  alert('Filme salvo com sucesso!');
+  mostrarMsg('Filme salvo com sucesso!');
   renderFilmes();
 }
 
 function renderFilmes() {
   var filmes = getData('filmes');
-  var tbody = document.querySelector('#tabela-filmes tbody');
+  var tbody = document.getElementById('tbody-filmes');
   tbody.innerHTML = '';
-
   if (filmes.length === 0) {
     tbody.innerHTML = '<tr><td colspan="6">Nenhum filme cadastrado.</td></tr>';
     return;
   }
-
   filmes.forEach(function(f) {
     var tr = document.createElement('tr');
     tr.innerHTML =
@@ -79,7 +77,7 @@ function renderFilmes() {
       '<td>' + f.classificacao + '</td>' +
       '<td>' + f.duracao + ' min</td>' +
       '<td>' + formatarData(f.estreia) + '</td>' +
-      '<td><button class="btn-excluir" onclick="excluir(\'filmes\',\'' + f.id + '\', renderFilmes)">Excluir</button></td>';
+      '<td><button class="btn-excluir" onclick="excluir(\'filmes\',\'' + f.id + '\',renderFilmes)">Excluir</button></td>';
     tbody.appendChild(tr);
   });
 }
@@ -87,42 +85,34 @@ function renderFilmes() {
 // ===== SALAS =====
 function salvarSala(event) {
   event.preventDefault();
-
-  var nome = document.getElementById('sala-nome').value.trim();
-  var capacidade = document.getElementById('sala-capacidade').value;
-  var tipo = document.getElementById('sala-tipo').value;
-
   var salas = getData('salas');
   salas.push({
     id: gerarId(),
-    nome: nome,
-    capacidade: capacidade,
-    tipo: tipo
+    nome: document.getElementById('sala-nome').value.trim(),
+    capacidade: document.getElementById('sala-capacidade').value,
+    tipo: document.getElementById('sala-tipo').value
   });
   setData('salas', salas);
-
   event.target.reset();
-  alert('Sala salva com sucesso!');
+  mostrarMsg('Sala salva com sucesso!');
   renderSalas();
 }
 
 function renderSalas() {
   var salas = getData('salas');
-  var tbody = document.querySelector('#tabela-salas tbody');
+  var tbody = document.getElementById('tbody-salas');
   tbody.innerHTML = '';
-
   if (salas.length === 0) {
     tbody.innerHTML = '<tr><td colspan="4">Nenhuma sala cadastrada.</td></tr>';
     return;
   }
-
   salas.forEach(function(s) {
     var tr = document.createElement('tr');
     tr.innerHTML =
       '<td>' + s.nome + '</td>' +
-      '<td>' + s.capacidade + '</td>' +
+      '<td>' + s.capacidade + ' lugares</td>' +
       '<td>' + s.tipo + '</td>' +
-      '<td><button class="btn-excluir" onclick="excluir(\'salas\',\'' + s.id + '\', renderSalas)">Excluir</button></td>';
+      '<td><button class="btn-excluir" onclick="excluir(\'salas\',\'' + s.id + '\',renderSalas)">Excluir</button></td>';
     tbody.appendChild(tr);
   });
 }
@@ -150,14 +140,8 @@ function carregarSelectsSessao() {
 
 function salvarSessao(event) {
   event.preventDefault();
-
   var filmeId = document.getElementById('sessao-filme').value;
   var salaId = document.getElementById('sessao-sala').value;
-  var datahora = document.getElementById('sessao-datahora').value;
-  var preco = document.getElementById('sessao-preco').value;
-  var idioma = document.getElementById('sessao-idioma').value;
-  var formato = document.getElementById('sessao-formato').value;
-
   var filmes = getData('filmes');
   var salas = getData('salas');
   var filme = filmes.find(function(f) { return f.id === filmeId; });
@@ -170,28 +154,25 @@ function salvarSessao(event) {
     salaId: salaId,
     filmeNome: filme.titulo,
     salaNome: sala.nome,
-    datahora: datahora,
-    preco: preco,
-    idioma: idioma,
-    formato: formato
+    datahora: document.getElementById('sessao-datahora').value,
+    preco: document.getElementById('sessao-preco').value,
+    idioma: document.getElementById('sessao-idioma').value,
+    formato: document.getElementById('sessao-formato').value
   });
   setData('sessoes', sessoes);
-
   event.target.reset();
-  alert('Sessão salva com sucesso!');
+  mostrarMsg('Sessão salva com sucesso!');
   renderSessoes();
 }
 
 function renderSessoes() {
   var sessoes = getData('sessoes');
-  var tbody = document.querySelector('#tabela-sessoes tbody');
+  var tbody = document.getElementById('tbody-sessoes');
   tbody.innerHTML = '';
-
   if (sessoes.length === 0) {
     tbody.innerHTML = '<tr><td colspan="7">Nenhuma sessão cadastrada.</td></tr>';
     return;
   }
-
   sessoes.forEach(function(s) {
     var tr = document.createElement('tr');
     tr.innerHTML =
@@ -201,7 +182,7 @@ function renderSessoes() {
       '<td>R$ ' + parseFloat(s.preco).toFixed(2) + '</td>' +
       '<td>' + s.idioma + '</td>' +
       '<td>' + s.formato + '</td>' +
-      '<td><button class="btn-excluir" onclick="excluir(\'sessoes\',\'' + s.id + '\', renderSessoes)">Excluir</button></td>';
+      '<td><button class="btn-excluir" onclick="excluir(\'sessoes\',\'' + s.id + '\',renderSessoes)">Excluir</button></td>';
     tbody.appendChild(tr);
   });
 }
@@ -210,7 +191,6 @@ function renderSessoes() {
 function carregarSelectsIngresso(selecionarId) {
   var sessoes = getData('sessoes');
   var sel = document.getElementById('ingresso-sessao');
-
   sel.innerHTML = '<option value="">Selecione uma sessão...</option>';
   sessoes.forEach(function(s) {
     var selected = s.id === selecionarId ? ' selected' : '';
@@ -218,18 +198,13 @@ function carregarSelectsIngresso(selecionarId) {
       s.filmeNome + ' - ' + s.salaNome + ' - ' + formatarDataHora(s.datahora) +
       '</option>';
   });
-
   renderIngressos();
 }
 
 function confirmarVenda(event) {
   event.preventDefault();
-
   var sessaoId = document.getElementById('ingresso-sessao').value;
-  var nome = document.getElementById('ingresso-nome').value.trim();
-  var cpf = document.getElementById('ingresso-cpf').value.trim();
   var assento = document.getElementById('ingresso-assento').value.trim().toUpperCase();
-  var pagamento = document.getElementById('ingresso-pagamento').value;
 
   var ingressos = getData('ingressos');
   var assentoOcupado = ingressos.find(function(i) {
@@ -237,7 +212,7 @@ function confirmarVenda(event) {
   });
 
   if (assentoOcupado) {
-    alert('Assento ' + assento + ' já está ocupado nessa sessão!');
+    mostrarMsg('Assento ' + assento + ' já está ocupado nessa sessão!', true);
     return;
   }
 
@@ -250,29 +225,26 @@ function confirmarVenda(event) {
     filmeNome: sessao.filmeNome,
     salaNome: sessao.salaNome,
     datahora: sessao.datahora,
-    nome: nome,
-    cpf: cpf,
+    nome: document.getElementById('ingresso-nome').value.trim(),
+    cpf: document.getElementById('ingresso-cpf').value.trim(),
     assento: assento,
-    pagamento: pagamento,
+    pagamento: document.getElementById('ingresso-pagamento').value,
     preco: sessao.preco
   });
   setData('ingressos', ingressos);
-
   event.target.reset();
-  alert('Ingresso vendido com sucesso!');
+  mostrarMsg('Ingresso vendido com sucesso!');
   renderIngressos();
 }
 
 function renderIngressos() {
   var ingressos = getData('ingressos');
-  var tbody = document.querySelector('#tabela-ingressos tbody');
+  var tbody = document.getElementById('tbody-ingressos');
   tbody.innerHTML = '';
-
   if (ingressos.length === 0) {
     tbody.innerHTML = '<tr><td colspan="7">Nenhum ingresso vendido.</td></tr>';
     return;
   }
-
   ingressos.forEach(function(i) {
     var tr = document.createElement('tr');
     tr.innerHTML =
@@ -282,28 +254,28 @@ function renderIngressos() {
       '<td>' + i.assento + '</td>' +
       '<td>' + i.pagamento + '</td>' +
       '<td>R$ ' + parseFloat(i.preco).toFixed(2) + '</td>' +
-      '<td><button class="btn-excluir" onclick="excluir(\'ingressos\',\'' + i.id + '\', renderIngressos)">Excluir</button></td>';
+      '<td><button class="btn-excluir" onclick="excluir(\'ingressos\',\'' + i.id + '\',renderIngressos)">Excluir</button></td>';
     tbody.appendChild(tr);
   });
 }
 
-// ===== LISTAGEM DE SESSÕES =====
+// ===== LISTAGEM =====
 function renderListagem() {
   var sessoes = getData('sessoes');
-  var tbody = document.querySelector('#tabela-listagem tbody');
+  var tbody = document.getElementById('tbody-listagem');
   tbody.innerHTML = '';
-
   if (sessoes.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5">Nenhuma sessão disponível.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7">Nenhuma sessão disponível.</td></tr>';
     return;
   }
-
   sessoes.forEach(function(s) {
     var tr = document.createElement('tr');
     tr.innerHTML =
       '<td>' + s.filmeNome + '</td>' +
       '<td>' + s.salaNome + '</td>' +
       '<td>' + formatarDataHora(s.datahora) + '</td>' +
+      '<td>' + s.idioma + '</td>' +
+      '<td>' + s.formato + '</td>' +
       '<td>R$ ' + parseFloat(s.preco).toFixed(2) + '</td>' +
       '<td><button class="btn-comprar" onclick="comprarIngresso(\'' + s.id + '\')">Comprar Ingresso</button></td>';
     tbody.appendChild(tr);
@@ -326,14 +298,13 @@ function excluir(chave, id, renderFn) {
 // ===== UTILITÁRIOS =====
 function formatarData(str) {
   if (!str) return '';
-  var partes = str.split('-');
-  return partes[2] + '/' + partes[1] + '/' + partes[0];
+  var p = str.split('-');
+  return p[2] + '/' + p[1] + '/' + p[0];
 }
 
 function formatarDataHora(str) {
   if (!str) return '';
-  var dt = new Date(str);
-  return dt.toLocaleString('pt-BR');
+  return new Date(str).toLocaleString('pt-BR');
 }
 
 // ===== INICIALIZAÇÃO =====
@@ -341,7 +312,6 @@ window.onload = function() {
   renderFilmes();
   renderSalas();
 
-  // Máscara CPF
   document.getElementById('ingresso-cpf').addEventListener('input', function() {
     var v = this.value.replace(/\D/g, '').slice(0, 11);
     v = v.replace(/(\d{3})(\d)/, '$1.$2');
