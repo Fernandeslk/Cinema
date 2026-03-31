@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sistema de Cinema</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav>
+    <a href="#" onclick="navTo('home')">Início</a>
+    <a href="#" onclick="navTo('filmes')">Cadastro de Filmes</a>
+    <a href="#" onclick="navTo('salas')">Cadastro de Salas</a>
+    <a href="#" onclick="navTo('sessoes')">Cadastro de Sessões</a>
+    <a href="#" onclick="navTo('ingressos')">Venda de Ingressos</a>
+    <a href="#" onclick="navTo('listagem')">Sessões Disponíveis</a>
+  </nav>
+
+  <!-- HOME -->
+  <div id="page-home" class="page active">
+    <h1>Sistema de Controle de Cinema</h1>
+    <p>Use o menu acima para navegar entre as páginas.</p>
+  </div>
+
+  <!-- FILMES -->
+  <div id="page-filmes" class="page">
+    <h2>Cadastro de Filmes</h2>
+    <form onsubmit="salvarFilme(event)">
+      <label>Título:</label>
+      <input type="text" id="filme-titulo" required />
+
+      <label>Gênero:</label>
+      <select id="filme-genero" required>
+        <option value="">Selecione...</option>
+        <option>Ação</option>
+        <option>Comédia</option>
+        <option>Drama</option>
+        <option>Terror</option>
+        <option>Ficção Científica</option>
+        <option>Romance</option>
+        <option>Animação</option>
+        <option>Documentário</option>
+      </select>
+
+      <label>Descrição:</label>
+      <textarea id="filme-descricao" rows="3"></textarea>
+
+      <label>Classificação Indicativa:</label>
+      <select id="filme-classificacao" required>
+        <option value="">Selecione...</option>
+        <option>Livre</option>
+        <option>10 anos</option>
+        <option>12 anos</option>
+        <option>14 anos</option>
+        <option>16 anos</option>
+        <option>18 anos</option>
+      </select>
+
+      <label>Duração (minutos):</label>
+      <input type="number" id="filme-duracao" min="1" required />
+
+      <label>Data de Estreia:</label>
+      <input type="date" id="filme-estreia" required />
+
+      <button type="submit">Salvar Filme</button>
+    </form>
+
+    <h3>Filmes Cadastrados</h3>
+    <table id="tabela-filmes">
+      <thead>
+        <tr>
+          <th>Título</th><th>Gênero</th><th>Classificação</th><th>Duração</th><th>Estreia</th><th>Ação</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- SALAS -->
+  <div id="page-salas" class="page">
+    <h2>Cadastro de Salas</h2>
+    <form onsubmit="salvarSala(event)">
+      <label>Nome da Sala:</label>
+      <input type="text" id="sala-nome" required />
+
+      <label>Capacidade:</label>
+      <input type="number" id="sala-capacidade" min="1" required />
+
+      <label>Tipo:</label>
+      <select id="sala-tipo" required>
+        <option value="">Selecione...</option>
+        <option>2D</option>
+        <option>3D</option>
+        <option>IMAX</option>
+      </select>
+
+      <button type="submit">Salvar Sala</button>
+    </form>
+
+    <h3>Salas Cadastradas</h3>
+    <table id="tabela-salas">
+      <thead>
+        <tr>
+          <th>Nome</th><th>Capacidade</th><th>Tipo</th><th>Ação</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- SESSÕES -->
+  <div id="page-sessoes" class="page">
+    <h2>Cadastro de Sessões</h2>
+    <form onsubmit="salvarSessao(event)">
+      <label>Filme:</label>
+      <select id="sessao-filme" required>
+        <option value="">Selecione um filme...</option>
+      </select>
+
+      <label>Sala:</label>
+      <select id="sessao-sala" required>
+        <option value="">Selecione uma sala...</option>
+      </select>
+
+      <label>Data e Hora:</label>
+      <input type="datetime-local" id="sessao-datahora" required />
+
+      <label>Preço (R$):</label>
+      <input type="number" id="sessao-preco" min="0" step="0.01" required />
+
+      <label>Idioma:</label>
+      <select id="sessao-idioma" required>
+        <option value="">Selecione...</option>
+        <option>Dublado</option>
+        <option>Legendado</option>
+      </select>
+
+      <label>Formato:</label>
+      <select id="sessao-formato" required>
+        <option value="">Selecione...</option>
+        <option>2D</option>
+        <option>3D</option>
+      </select>
+
+      <button type="submit">Salvar Sessão</button>
+    </form>
+
+    <h3>Sessões Cadastradas</h3>
+    <table id="tabela-sessoes">
+      <thead>
+        <tr>
+          <th>Filme</th><th>Sala</th><th>Data/Hora</th><th>Preço</th><th>Idioma</th><th>Formato</th><th>Ação</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- INGRESSOS -->
+  <div id="page-ingressos" class="page">
+    <h2>Venda de Ingressos</h2>
+    <form onsubmit="confirmarVenda(event)">
+      <label>Sessão:</label>
+      <select id="ingresso-sessao" required>
+        <option value="">Selecione uma sessão...</option>
+      </select>
+
+      <label>Nome do Cliente:</label>
+      <input type="text" id="ingresso-nome" required />
+
+      <label>CPF:</label>
+      <input type="text" id="ingresso-cpf" placeholder="000.000.000-00" maxlength="14" required />
+
+      <label>Assento:</label>
+      <input type="text" id="ingresso-assento" placeholder="Ex: A10" required />
+
+      <label>Tipo de Pagamento:</label>
+      <select id="ingresso-pagamento" required>
+        <option value="">Selecione...</option>
+        <option>Cartão</option>
+        <option>Pix</option>
+        <option>Dinheiro</option>
+      </select>
+
+      <button type="submit">Confirmar Venda</button>
+    </form>
+
+    <h3>Ingressos Vendidos</h3>
+    <table id="tabela-ingressos">
+      <thead>
+        <tr>
+          <th>Filme</th><th>Cliente</th><th>CPF</th><th>Assento</th><th>Pagamento</th><th>Preço</th><th>Ação</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- LISTAGEM -->
+  <div id="page-listagem" class="page">
+    <h2>Sessões Disponíveis</h2>
+    <table id="tabela-listagem">
+      <thead>
+        <tr>
+          <th>Filme</th><th>Sala</th><th>Data/Hora</th><th>Preço</th><th>Ação</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
