@@ -4,265 +4,317 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sistema de Cinema</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <header>
-    <h1>🎬 Sistema de Cinema</h1>
-  </header>
-
-  <nav>
-    <a href="#" onclick="navTo('home')">Início</a>
-    <a href="#" onclick="navTo('filmes')">Filmes</a>
-    <a href="#" onclick="navTo('salas')">Salas</a>
-    <a href="#" onclick="navTo('sessoes')">Sessões</a>
-    <a href="#" onclick="navTo('ingressos')">Ingressos</a>
-    <a href="#" onclick="navTo('listagem')" class="destaque">Ver Sessões</a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <span class="navbar-brand">🎬 Sistema de Cinema</span>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="#" onclick="navTo('home')">Início</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="navTo('filmes')">Cadastro de Filmes</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="navTo('salas')">Cadastro de Salas</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="navTo('sessoes')">Cadastro de Sessões</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="navTo('ingressos')">Venda de Ingressos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="navTo('listagem')">Sessões Disponíveis</a></li>
+        </ul>
+      </div>
+    </div>
   </nav>
 
   <!-- HOME -->
   <div id="page-home" class="page active">
-    <div class="home-content">
+    <div class="container mt-5 text-center">
       <h2>Bem-vindo ao Sistema de Cinema</h2>
-      <p>Utilize o menu para navegar entre as seções do sistema.</p>
-      <div class="cards-home">
-        <div class="card" onclick="navTo('filmes')">🎞️<br/>Cadastrar Filmes</div>
-        <div class="card" onclick="navTo('salas')">🏛️<br/>Cadastrar Salas</div>
-        <div class="card" onclick="navTo('sessoes')">🗓️<br/>Cadastrar Sessões</div>
-        <div class="card" onclick="navTo('ingressos')">🎟️<br/>Vender Ingressos</div>
-        <div class="card" onclick="navTo('listagem')">📋<br/>Ver Sessões</div>
+      <p class="text-muted mb-4">Utilize o menu acima para navegar entre as seções.</p>
+      <div class="row justify-content-center g-3">
+        <div class="col-6 col-md-3">
+          <div class="card card-home" onclick="navTo('filmes')">
+            <div class="card-body">🎞️<br/>Cadastrar Filmes</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card card-home" onclick="navTo('salas')">
+            <div class="card-body">🏛️<br/>Cadastrar Salas</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card card-home" onclick="navTo('sessoes')">
+            <div class="card-body">🗓️<br/>Cadastrar Sessões</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card card-home" onclick="navTo('ingressos')">
+            <div class="card-body">🎟️<br/>Vender Ingressos</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card card-home" onclick="navTo('listagem')">
+            <div class="card-body">📋<br/>Ver Sessões</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- FILMES -->
   <div id="page-filmes" class="page">
-    <div class="container">
-      <h2>Cadastro de Filmes</h2>
-      <form onsubmit="salvarFilme(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Título *</label>
-            <input type="text" id="filme-titulo" required />
-          </div>
-          <div class="form-group">
-            <label>Gênero *</label>
-            <select id="filme-genero" required>
-              <option value="">Selecione...</option>
-              <option>Ação</option>
-              <option>Comédia</option>
-              <option>Drama</option>
-              <option>Terror</option>
-              <option>Ficção Científica</option>
-              <option>Romance</option>
-              <option>Animação</option>
-              <option>Documentário</option>
-            </select>
-          </div>
+    <div class="container mt-4">
+      <h2 class="mb-3">Cadastro de Filmes</h2>
+      <div class="card mb-4">
+        <div class="card-body">
+          <form onsubmit="salvarFilme(event)">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Título *</label>
+                <input type="text" class="form-control" id="filme-titulo" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Gênero *</label>
+                <select class="form-select" id="filme-genero" required>
+                  <option value="">Selecione...</option>
+                  <option>Ação</option>
+                  <option>Comédia</option>
+                  <option>Drama</option>
+                  <option>Terror</option>
+                  <option>Ficção Científica</option>
+                  <option>Romance</option>
+                  <option>Animação</option>
+                  <option>Documentário</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Descrição</label>
+                <textarea class="form-control" id="filme-descricao" rows="3"></textarea>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Classificação Indicativa *</label>
+                <select class="form-select" id="filme-classificacao" required>
+                  <option value="">Selecione...</option>
+                  <option>Livre</option>
+                  <option>10 anos</option>
+                  <option>12 anos</option>
+                  <option>14 anos</option>
+                  <option>16 anos</option>
+                  <option>18 anos</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Duração (minutos) *</label>
+                <input type="number" class="form-control" id="filme-duracao" min="1" required />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Data de Estreia *</label>
+                <input type="date" class="form-control" id="filme-estreia" required />
+              </div>
+            </div>
+            <button type="submit" class="btn btn-dark mt-3">Salvar Filme</button>
+          </form>
         </div>
-        <div class="form-group">
-          <label>Descrição</label>
-          <textarea id="filme-descricao" rows="3"></textarea>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Classificação Indicativa *</label>
-            <select id="filme-classificacao" required>
-              <option value="">Selecione...</option>
-              <option>Livre</option>
-              <option>10 anos</option>
-              <option>12 anos</option>
-              <option>14 anos</option>
-              <option>16 anos</option>
-              <option>18 anos</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Duração (minutos) *</label>
-            <input type="number" id="filme-duracao" min="1" required />
-          </div>
-          <div class="form-group">
-            <label>Data de Estreia *</label>
-            <input type="date" id="filme-estreia" required />
-          </div>
-        </div>
-        <button type="submit">Salvar Filme</button>
-      </form>
+      </div>
 
-      <h3>Filmes Cadastrados</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Título</th><th>Gênero</th><th>Classificação</th><th>Duração</th><th>Estreia</th><th>Ação</th>
-          </tr>
-        </thead>
-        <tbody id="tbody-filmes"></tbody>
-      </table>
+      <h5>Filmes Cadastrados</h5>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead class="table-dark">
+            <tr><th>Título</th><th>Gênero</th><th>Classificação</th><th>Duração</th><th>Estreia</th><th>Ação</th></tr>
+          </thead>
+          <tbody id="tbody-filmes"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
   <!-- SALAS -->
   <div id="page-salas" class="page">
-    <div class="container">
-      <h2>Cadastro de Salas</h2>
-      <form onsubmit="salvarSala(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Nome da Sala *</label>
-            <input type="text" id="sala-nome" required />
-          </div>
-          <div class="form-group">
-            <label>Capacidade *</label>
-            <input type="number" id="sala-capacidade" min="1" required />
-          </div>
-          <div class="form-group">
-            <label>Tipo *</label>
-            <select id="sala-tipo" required>
-              <option value="">Selecione...</option>
-              <option>2D</option>
-              <option>3D</option>
-              <option>IMAX</option>
-            </select>
-          </div>
+    <div class="container mt-4">
+      <h2 class="mb-3">Cadastro de Salas</h2>
+      <div class="card mb-4">
+        <div class="card-body">
+          <form onsubmit="salvarSala(event)">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label">Nome da Sala *</label>
+                <input type="text" class="form-control" id="sala-nome" required />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Capacidade *</label>
+                <input type="number" class="form-control" id="sala-capacidade" min="1" required />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Tipo *</label>
+                <select class="form-select" id="sala-tipo" required>
+                  <option value="">Selecione...</option>
+                  <option>2D</option>
+                  <option>3D</option>
+                  <option>IMAX</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-dark mt-3">Salvar Sala</button>
+          </form>
         </div>
-        <button type="submit">Salvar Sala</button>
-      </form>
+      </div>
 
-      <h3>Salas Cadastradas</h3>
-      <table>
-        <thead>
-          <tr><th>Nome</th><th>Capacidade</th><th>Tipo</th><th>Ação</th></tr>
-        </thead>
-        <tbody id="tbody-salas"></tbody>
-      </table>
+      <h5>Salas Cadastradas</h5>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead class="table-dark">
+            <tr><th>Nome</th><th>Capacidade</th><th>Tipo</th><th>Ação</th></tr>
+          </thead>
+          <tbody id="tbody-salas"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
   <!-- SESSÕES -->
   <div id="page-sessoes" class="page">
-    <div class="container">
-      <h2>Cadastro de Sessões</h2>
-      <form onsubmit="salvarSessao(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Filme *</label>
-            <select id="sessao-filme" required>
-              <option value="">Selecione um filme...</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Sala *</label>
-            <select id="sessao-sala" required>
-              <option value="">Selecione uma sala...</option>
-            </select>
-          </div>
+    <div class="container mt-4">
+      <h2 class="mb-3">Cadastro de Sessões</h2>
+      <div class="card mb-4">
+        <div class="card-body">
+          <form onsubmit="salvarSessao(event)">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Filme *</label>
+                <select class="form-select" id="sessao-filme" required>
+                  <option value="">Selecione um filme...</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Sala *</label>
+                <select class="form-select" id="sessao-sala" required>
+                  <option value="">Selecione uma sala...</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Data e Hora *</label>
+                <input type="datetime-local" class="form-control" id="sessao-datahora" required />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Preço (R$) *</label>
+                <input type="number" class="form-control" id="sessao-preco" min="0" step="0.01" required />
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">Idioma *</label>
+                <select class="form-select" id="sessao-idioma" required>
+                  <option value="">Selecione...</option>
+                  <option>Dublado</option>
+                  <option>Legendado</option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">Formato *</label>
+                <select class="form-select" id="sessao-formato" required>
+                  <option value="">Selecione...</option>
+                  <option>2D</option>
+                  <option>3D</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-dark mt-3">Salvar Sessão</button>
+          </form>
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Data e Hora *</label>
-            <input type="datetime-local" id="sessao-datahora" required />
-          </div>
-          <div class="form-group">
-            <label>Preço (R$) *</label>
-            <input type="number" id="sessao-preco" min="0" step="0.01" required />
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Idioma *</label>
-            <select id="sessao-idioma" required>
-              <option value="">Selecione...</option>
-              <option>Dublado</option>
-              <option>Legendado</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Formato *</label>
-            <select id="sessao-formato" required>
-              <option value="">Selecione...</option>
-              <option>2D</option>
-              <option>3D</option>
-            </select>
-          </div>
-        </div>
-        <button type="submit">Salvar Sessão</button>
-      </form>
+      </div>
 
-      <h3>Sessões Cadastradas</h3>
-      <table>
-        <thead>
-          <tr><th>Filme</th><th>Sala</th><th>Data/Hora</th><th>Preço</th><th>Idioma</th><th>Formato</th><th>Ação</th></tr>
-        </thead>
-        <tbody id="tbody-sessoes"></tbody>
-      </table>
+      <h5>Sessões Cadastradas</h5>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead class="table-dark">
+            <tr><th>Filme</th><th>Sala</th><th>Data/Hora</th><th>Preço</th><th>Idioma</th><th>Formato</th><th>Ação</th></tr>
+          </thead>
+          <tbody id="tbody-sessoes"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
   <!-- INGRESSOS -->
   <div id="page-ingressos" class="page">
-    <div class="container">
-      <h2>Venda de Ingressos</h2>
-      <form onsubmit="confirmarVenda(event)">
-        <div class="form-group">
-          <label>Sessão *</label>
-          <select id="ingresso-sessao" required>
-            <option value="">Selecione uma sessão...</option>
-          </select>
+    <div class="container mt-4">
+      <h2 class="mb-3">Venda de Ingressos</h2>
+      <div class="card mb-4">
+        <div class="card-body">
+          <form onsubmit="confirmarVenda(event)">
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label">Sessão *</label>
+                <select class="form-select" id="ingresso-sessao" required>
+                  <option value="">Selecione uma sessão...</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Nome do Cliente *</label>
+                <input type="text" class="form-control" id="ingresso-nome" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">CPF *</label>
+                <input type="text" class="form-control" id="ingresso-cpf" placeholder="000.000.000-00" maxlength="14" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Assento *</label>
+                <input type="text" class="form-control" id="ingresso-assento" placeholder="Ex: A10" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Tipo de Pagamento *</label>
+                <select class="form-select" id="ingresso-pagamento" required>
+                  <option value="">Selecione...</option>
+                  <option>Cartão</option>
+                  <option>Pix</option>
+                  <option>Dinheiro</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-dark mt-3">Confirmar Venda</button>
+          </form>
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Nome do Cliente *</label>
-            <input type="text" id="ingresso-nome" required />
-          </div>
-          <div class="form-group">
-            <label>CPF *</label>
-            <input type="text" id="ingresso-cpf" placeholder="000.000.000-00" maxlength="14" required />
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Assento *</label>
-            <input type="text" id="ingresso-assento" placeholder="Ex: A10" required />
-          </div>
-          <div class="form-group">
-            <label>Tipo de Pagamento *</label>
-            <select id="ingresso-pagamento" required>
-              <option value="">Selecione...</option>
-              <option>Cartão</option>
-              <option>Pix</option>
-              <option>Dinheiro</option>
-            </select>
-          </div>
-        </div>
-        <button type="submit">Confirmar Venda</button>
-      </form>
+      </div>
 
-      <h3>Ingressos Vendidos</h3>
-      <table>
-        <thead>
-          <tr><th>Filme</th><th>Cliente</th><th>CPF</th><th>Assento</th><th>Pagamento</th><th>Preço</th><th>Ação</th></tr>
-        </thead>
-        <tbody id="tbody-ingressos"></tbody>
-      </table>
+      <h5>Ingressos Vendidos</h5>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead class="table-dark">
+            <tr><th>Filme</th><th>Cliente</th><th>CPF</th><th>Assento</th><th>Pagamento</th><th>Preço</th><th>Ação</th></tr>
+          </thead>
+          <tbody id="tbody-ingressos"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
   <!-- LISTAGEM -->
   <div id="page-listagem" class="page">
-    <div class="container">
-      <h2>Sessões Disponíveis</h2>
-      <table>
-        <thead>
-          <tr><th>Filme</th><th>Sala</th><th>Data/Hora</th><th>Idioma</th><th>Formato</th><th>Preço</th><th>Ação</th></tr>
-        </thead>
-        <tbody id="tbody-listagem"></tbody>
-      </table>
+    <div class="container mt-4">
+      <h2 class="mb-3">Sessões Disponíveis</h2>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead class="table-dark">
+            <tr><th>Filme</th><th>Sala</th><th>Data/Hora</th><th>Idioma</th><th>Formato</th><th>Preço</th><th>Ação</th></tr>
+          </thead>
+          <tbody id="tbody-listagem"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
-  <div id="msg" class="msg"></div>
+  <!-- TOAST -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 999">
+    <div id="toast" class="toast align-items-center text-white border-0" role="alert">
+      <div class="d-flex">
+        <div class="toast-body" id="toast-msg"></div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+  </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

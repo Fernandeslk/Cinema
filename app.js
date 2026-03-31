@@ -33,13 +33,14 @@ function gerarId() {
   return Date.now().toString();
 }
 
-// ===== MENSAGEM =====
-function mostrarMsg(texto, erro) {
-  var el = document.getElementById('msg');
-  el.textContent = texto;
-  el.className = 'msg' + (erro ? ' erro' : '');
-  el.style.display = 'block';
-  setTimeout(function() { el.style.display = 'none'; }, 3000);
+// ===== TOAST BOOTSTRAP =====
+function mostrarToast(msg, erro) {
+  var toastEl = document.getElementById('toast');
+  var toastMsg = document.getElementById('toast-msg');
+  toastMsg.textContent = msg;
+  toastEl.className = 'toast align-items-center text-white border-0 ' + (erro ? 'bg-danger' : 'bg-success');
+  var toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+  toast.show();
 }
 
 // ===== FILMES =====
@@ -57,7 +58,7 @@ function salvarFilme(event) {
   });
   setData('filmes', filmes);
   event.target.reset();
-  mostrarMsg('Filme salvo com sucesso!');
+  mostrarToast('Filme salvo com sucesso!');
   renderFilmes();
 }
 
@@ -66,7 +67,7 @@ function renderFilmes() {
   var tbody = document.getElementById('tbody-filmes');
   tbody.innerHTML = '';
   if (filmes.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="6">Nenhum filme cadastrado.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">Nenhum filme cadastrado.</td></tr>';
     return;
   }
   filmes.forEach(function(f) {
@@ -77,7 +78,7 @@ function renderFilmes() {
       '<td>' + f.classificacao + '</td>' +
       '<td>' + f.duracao + ' min</td>' +
       '<td>' + formatarData(f.estreia) + '</td>' +
-      '<td><button class="btn-excluir" onclick="excluir(\'filmes\',\'' + f.id + '\',renderFilmes)">Excluir</button></td>';
+      '<td><button class="btn btn-danger btn-sm" onclick="excluir(\'filmes\',\'' + f.id + '\',renderFilmes)">Excluir</button></td>';
     tbody.appendChild(tr);
   });
 }
@@ -94,7 +95,7 @@ function salvarSala(event) {
   });
   setData('salas', salas);
   event.target.reset();
-  mostrarMsg('Sala salva com sucesso!');
+  mostrarToast('Sala salva com sucesso!');
   renderSalas();
 }
 
@@ -103,7 +104,7 @@ function renderSalas() {
   var tbody = document.getElementById('tbody-salas');
   tbody.innerHTML = '';
   if (salas.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="4">Nenhuma sala cadastrada.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">Nenhuma sala cadastrada.</td></tr>';
     return;
   }
   salas.forEach(function(s) {
@@ -112,7 +113,7 @@ function renderSalas() {
       '<td>' + s.nome + '</td>' +
       '<td>' + s.capacidade + ' lugares</td>' +
       '<td>' + s.tipo + '</td>' +
-      '<td><button class="btn-excluir" onclick="excluir(\'salas\',\'' + s.id + '\',renderSalas)">Excluir</button></td>';
+      '<td><button class="btn btn-danger btn-sm" onclick="excluir(\'salas\',\'' + s.id + '\',renderSalas)">Excluir</button></td>';
     tbody.appendChild(tr);
   });
 }
@@ -161,7 +162,7 @@ function salvarSessao(event) {
   });
   setData('sessoes', sessoes);
   event.target.reset();
-  mostrarMsg('Sessão salva com sucesso!');
+  mostrarToast('Sessão salva com sucesso!');
   renderSessoes();
 }
 
@@ -170,7 +171,7 @@ function renderSessoes() {
   var tbody = document.getElementById('tbody-sessoes');
   tbody.innerHTML = '';
   if (sessoes.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="7">Nenhuma sessão cadastrada.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">Nenhuma sessão cadastrada.</td></tr>';
     return;
   }
   sessoes.forEach(function(s) {
@@ -182,7 +183,7 @@ function renderSessoes() {
       '<td>R$ ' + parseFloat(s.preco).toFixed(2) + '</td>' +
       '<td>' + s.idioma + '</td>' +
       '<td>' + s.formato + '</td>' +
-      '<td><button class="btn-excluir" onclick="excluir(\'sessoes\',\'' + s.id + '\',renderSessoes)">Excluir</button></td>';
+      '<td><button class="btn btn-danger btn-sm" onclick="excluir(\'sessoes\',\'' + s.id + '\',renderSessoes)">Excluir</button></td>';
     tbody.appendChild(tr);
   });
 }
@@ -212,7 +213,7 @@ function confirmarVenda(event) {
   });
 
   if (assentoOcupado) {
-    mostrarMsg('Assento ' + assento + ' já está ocupado nessa sessão!', true);
+    mostrarToast('Assento ' + assento + ' já está ocupado nessa sessão!', true);
     return;
   }
 
@@ -233,7 +234,7 @@ function confirmarVenda(event) {
   });
   setData('ingressos', ingressos);
   event.target.reset();
-  mostrarMsg('Ingresso vendido com sucesso!');
+  mostrarToast('Ingresso vendido com sucesso!');
   renderIngressos();
 }
 
@@ -242,7 +243,7 @@ function renderIngressos() {
   var tbody = document.getElementById('tbody-ingressos');
   tbody.innerHTML = '';
   if (ingressos.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="7">Nenhum ingresso vendido.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">Nenhum ingresso vendido.</td></tr>';
     return;
   }
   ingressos.forEach(function(i) {
@@ -254,7 +255,7 @@ function renderIngressos() {
       '<td>' + i.assento + '</td>' +
       '<td>' + i.pagamento + '</td>' +
       '<td>R$ ' + parseFloat(i.preco).toFixed(2) + '</td>' +
-      '<td><button class="btn-excluir" onclick="excluir(\'ingressos\',\'' + i.id + '\',renderIngressos)">Excluir</button></td>';
+      '<td><button class="btn btn-danger btn-sm" onclick="excluir(\'ingressos\',\'' + i.id + '\',renderIngressos)">Excluir</button></td>';
     tbody.appendChild(tr);
   });
 }
@@ -265,7 +266,7 @@ function renderListagem() {
   var tbody = document.getElementById('tbody-listagem');
   tbody.innerHTML = '';
   if (sessoes.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="7">Nenhuma sessão disponível.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">Nenhuma sessão disponível.</td></tr>';
     return;
   }
   sessoes.forEach(function(s) {
@@ -277,7 +278,7 @@ function renderListagem() {
       '<td>' + s.idioma + '</td>' +
       '<td>' + s.formato + '</td>' +
       '<td>R$ ' + parseFloat(s.preco).toFixed(2) + '</td>' +
-      '<td><button class="btn-comprar" onclick="comprarIngresso(\'' + s.id + '\')">Comprar Ingresso</button></td>';
+      '<td><button class="btn btn-success btn-sm" onclick="comprarIngresso(\'' + s.id + '\')">Comprar Ingresso</button></td>';
     tbody.appendChild(tr);
   });
 }
